@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MATH-TC — Mathématiques du tronc commun</title>
+  <meta name="description" content="MATH-TC est l’application iPhone et iPad des élèves pour les mathématiques du tronc commun : S1, S2 et S3. Diffusée via Jamf School.">
+  <meta name="theme-color" content="#1e1b4b">
+  <link rel="icon" href="assets/app-icon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/app-icon.png">
+  <meta property="og:title" content="MATH-TC — Mathématiques du tronc commun">
+  <meta property="og:description" content="Cours, synthèses, vidéos, vrai/faux et grilles critériées pour les élèves S1–S3. Application diffusée via Jamf School.">
+  <meta property="og:image" content="assets/app-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_BE">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --champ-1: #1e6bbd;
+      --champ-2: #d19414;
+      --champ-3: #1a8576;
+      --champ-4: #7d54ad;
+      --ink: #12141a;
+      --muted: #5b6472;
+      --line: #e6e9ef;
+      --card: #ffffff;
+      --bg: #f4f6fa;
+      --hero: #16132e;
+      --radius: 18px;
+      --shadow: 0 18px 50px rgba(22, 19, 46, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Source Sans 3", "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: var(--champ-1); }
+    .wrap { width: min(1120px, calc(100% - 32px)); margin-inline: auto; }
+
+    nav {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(244, 246, 250, 0.86);
+      border-bottom: 1px solid rgba(22, 19, 46, 0.06);
+    }
+    nav .wrap {
+      display: flex; align-items: center; gap: 16px;
+      min-height: 64px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: inherit; font-weight: 700;
+      font-family: Outfit, sans-serif; letter-spacing: 0.02em;
+    }
+    .brand img { width: 36px; height: 36px; border-radius: 10px; }
+    nav ul {
+      list-style: none; display: flex; gap: 6px; margin: 0 0 0 auto; padding: 0;
+      flex-wrap: wrap; justify-content: flex-end;
+    }
+    nav a.navlink {
+      text-decoration: none; color: var(--muted);
+      font-weight: 600; font-size: 0.92rem;
+      padding: 8px 10px; border-radius: 999px;
+    }
+    nav a.navlink:hover { color: var(--ink); background: #fff; }
+
+    .hero {
+      background:
+        radial-gradient(circle at 12% 20%, rgba(168, 85, 247, 0.45), transparent 34%),
+        radial-gradient(circle at 88% 10%, rgba(34, 211, 238, 0.38), transparent 32%),
+        radial-gradient(circle at 70% 90%, rgba(30, 107, 189, 0.35), transparent 36%),
+        var(--hero);
+      color: #fff;
+      overflow: hidden;
+      padding: 72px 0 64px;
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px; align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 999px; padding: 6px 12px;
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    h1 {
+      font-family: Outfit, sans-serif;
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      line-height: 1.05; margin: 16px 0 12px; letter-spacing: -0.03em;
+    }
+    .hero p.lead {
+      font-size: 1.18rem; color: rgba(255,255,255,0.84);
+      max-width: 38rem; margin: 0 0 28px;
+    }
+    .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      text-decoration: none; font-weight: 700;
+      border-radius: 999px; padding: 12px 18px;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: #fff; color: #1b1540; }
+    .btn-ghost { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+    .meta { margin-top: 22px; color: rgba(255,255,255,0.62); font-size: 0.92rem; }
+
+    .phone {
+      width: min(320px, 100%);
+      margin-inline: auto;
+      background: #0b0a16;
+      border: 8px solid #2a2740;
+      border-radius: 36px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+      padding: 18px 14px 22px;
+    }
+    .phone-bar { height: 18px; display: flex; justify-content: center; margin-bottom: 8px; }
+    .phone-bar span { width: 86px; height: 8px; background: #1c1930; border-radius: 99px; }
+    .phone-logo { width: 52px; height: 52px; border-radius: 14px; margin: 4px auto 8px; }
+    .phone h2 { text-align: center; font-size: 1rem; margin: 0; font-family: Outfit, sans-serif; }
+    .phone .sub { text-align: center; color: #9aa3b5; font-size: 0.78rem; margin: 2px 0 14px; }
+    .years { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .year {
+      background: #1b1830; border-radius: 12px; padding: 10px 6px; text-align: center;
+    }
+    .year b { display: inline-block; font-size: 0.78rem; padding: 2px 8px; border-radius: 99px; }
+    .year span { display: block; font-size: 0.72rem; color: #c9d0dc; margin-top: 6px; }
+    .s1 b { color: #60a5fa; background: rgba(96,165,250,0.16); }
+    .s2 b { color: #34d399; background: rgba(52,211,153,0.16); }
+    .s3 b { color: #fbbf24; background: rgba(251,191,36,0.16); }
+    .mini {
+      margin-top: 8px; background: #1b1830; border-radius: 12px;
+      padding: 10px 12px; display: flex; align-items: center; gap: 10px; font-size: 0.84rem;
+    }
+    .glyph {
+      width: 28px; height: 28px; border-radius: 8px;
+      display: grid; place-items: center; font-size: 0.85rem; flex: none;
+    }
+
+    section { padding: 72px 0; }
+    h2.section {
+      font-family: Outfit, sans-serif; font-size: clamp(1.7rem, 3vw, 2.3rem);
+      letter-spacing: -0.03em; margin: 0 0 8px;
+    }
+    .intro { color: var(--muted); max-width: 40rem; margin: 0 0 28px; }
+
+    .cards {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    }
+    .card {
+      background: var(--card); border-radius: var(--radius);
+      padding: 20px; box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.7);
+    }
+    .card h3 { margin: 10px 0 6px; font-size: 1.05rem; font-family: Outfit, sans-serif; }
+    .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    .icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: grid; place-items: center; font-weight: 700; color: #fff;
+    }
+
+    .champs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .champ {
+      border-radius: var(--radius); padding: 18px 16px; color: #fff; min-height: 140px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .champ small { opacity: 0.85; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.72rem; }
+    .champ strong { font-family: Outfit, sans-serif; font-size: 1.3rem; margin-top: 4px; }
+    .c1 { background: linear-gradient(160deg, #3b8fe0, var(--champ-1)); }
+    .c2 { background: linear-gradient(160deg, #e3b44a, var(--champ-2)); }
+    .c3 { background: linear-gradient(160deg, #2ea894, var(--champ-3)); }
+    .c4 { background: linear-gradient(160deg, #9b74c7, var(--champ-4)); }
+
+    .split {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start;
+    }
+    .list { margin: 0; padding: 0; list-style: none; }
+    .list li {
+      display: flex; gap: 12px; padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .list li:last-child { border-bottom: 0; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 7px; flex: none; }
+
+    .faq details {
+      background: var(--card); border-radius: 14px; padding: 14px 18px; margin-bottom: 10px;
+      box-shadow: 0 8px 24px rgba(22, 19, 46, 0.05);
+    }
+    .faq summary { cursor: pointer; font-weight: 700; }
+    .faq p { margin: 8px 0 0; color: var(--muted); }
+
+    footer {
+      background: #0e0c1c; color: #d7dbe6; padding: 40px 0 28px;
+    }
+    footer p { margin: 0; font-size: 0.9rem; color: #aeb6c6; }
+    footer small { display: block; margin-top: 8px; color: #7f8898; }
+
+    @media (max-width: 880px) {
+      .hero-grid, .cards, .champs, .split { grid-template-columns: 1fr; }
+      nav ul { display: none; }
+      .hero { padding-top: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="#top">
+        <img src="assets/app-icon.png" alt="">
+        MATH-TC
+      </a>
+      <ul>
+        <li><a class="navlink" href="#fonctionnalites">Fonctionnalités</a></li>
+        <li><a class="navlink" href="#programme">Programme</a></li>
+        <li><a class="navlink" href="#accessibilite">Accessibilité</a></li>
+        <li><a class="navlink" href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Mathématiques · Tronc commun</div>
+        <h1>Les maths du tronc commun, dans la poche.</h1>
+        <p class="lead">
+          MATH-TC est l’application iPhone et iPad des élèves de 1<sup>re</sup>, 2<sup>e</sup> et 3<sup>e</sup> année.
+          Cours, synthèses, vidéos, exercices et grilles critériées — organisés comme en classe, champ par champ.
+        </p>
+        <div class="cta">
+          <a class="btn btn-ghost" href="#fonctionnalites">Découvrir l’app</a>
+        </div>
+        <p class="meta">iPhone et iPad · S1, S2, S3 · installée via Jamf School</p>
+      </div>
+      <div class="phone" aria-hidden="true">
+        <div class="phone-bar"><span></span></div>
+        <img class="phone-logo" src="assets/logo-math.png" alt="">
+        <h2>Mathématiques</h2>
+        <p class="sub">Tronc commun</p>
+        <div class="years">
+          <div class="year s1"><b>S1</b><span>1re année</span></div>
+          <div class="year s2"><b>S2</b><span>2e année</span></div>
+          <div class="year s3"><b>S3</b><span>3e année</span></div>
+        </div>
+        <div class="mini"><span class="glyph" style="background:#1a8576">✓</span> Vrai / Faux par chapitre</div>
+        <div class="mini"><span class="glyph" style="background:#1e6bbd">≡</span> Grilles critériées</div>
+        <div class="mini"><span class="glyph" style="background:#0d9488">÷</span> Calculatrice naturelle</div>
+      </div>
+    </div>
+  </header>
+
+  <section id="fonctionnalites">
+    <div class="wrap">
+      <h2 class="section">Tout ce qu’il faut pour travailler</h2>
+      <p class="intro">Les ressources du cours sont regroupées par année et par chapitre, avec la même charte visuelle partout dans l’app.</p>
+      <div class="cards">
+        <article class="card">
+          <div class="icon" style="background:var(--champ-1)">1</div>
+          <h3>Chapitres S1 · S2 · S3</h3>
+          <p>Le cours PDF, les vidéos, les OMB, les synthèses et les remédiations, classés dans l’ordre du programme.</p>
+        </article>
+        <article class="card">
+          <div class="icon" style="background:var(--champ-3)">VF</div>
+          <h3>Vrai / Faux</h3>
+          <p>Des questionnaires par chapitre, un bilan à la fin, le meilleur score mémorisé et l’historique des essais.</p>
+        </article>
+        <article class="card">
+          <div class="icon" style="background:var(--champ-4)">∑</div>
+          <h3>Outils du cours</h3>
+          <p>Calculatrice à affichage naturel, formules, notations, verbes de consigne et grilles critériées par champ.</p>
+        </article>
+        <article class="card">
+          <div class="icon" style="background:#db2777">▶</div>
+          <h3>Vidéos et interactivité</h3>
+          <p>Les explications filmées et les activités des chapitres, accessibles en un tap depuis l’accueil.</p>
+        </article>
+        <article class="card">
+          <div class="icon" style="background:#0f766e">↓</div>
+          <h3>À emporter hors ligne</h3>
+          <p>Téléchargez les PDF (cours, synthèses, OMB, remédiations) pour les relire sans réseau.</p>
+        </article>
+        <article class="card">
+          <div class="icon" style="background:#ca8a04">★</div>
+          <h3>Favoris et widget</h3>
+          <p>Épinglez vos ressources. Un widget iOS reprend le dernier chapitre ouvert pour continuer tout de suite.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="programme" style="padding-top:0">
+    <div class="wrap">
+      <h2 class="section">Quatre champs, une couleur</h2>
+      <p class="intro">Chaque chapitre indique le champ du tronc commun auquel il appartient. Les mêmes couleurs se retrouvent dans les listes de synthèses, vidéos, OMB et remédiations.</p>
+      <div class="champs">
+        <div class="champ c1"><small>Champ 1</small><strong>Géométrie</strong></div>
+        <div class="champ c2"><small>Champ 2</small><strong>Grandeurs</strong></div>
+        <div class="champ c3"><small>Champ 3</small><strong>Nombres</strong></div>
+        <div class="champ c4"><small>Champ 4</small><strong>Statistique</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="accessibilite">
+    <div class="wrap split">
+      <div>
+        <h2 class="section">Pensée pour les élèves</h2>
+        <p class="intro">L’app est réservée aux élèves : pas d’espace enseignant, pas de compte à créer. Les scores restent sur l’appareil.</p>
+        <ul class="list">
+          <li><span class="dot" style="background:var(--champ-1)"></span><div><strong>Taille du texte</strong><br>Petite, moyenne ou grande, selon ce qui est confortable.</div></li>
+          <li><span class="dot" style="background:var(--champ-3)"></span><div><strong>Contraste renforcé</strong><br>Un mode pensé pour la lisibilité (dont les besoins liés à la dyslexie).</div></li>
+          <li><span class="dot" style="background:var(--champ-4)"></span><div><strong>Thème clair ou sombre</strong><br>Ou le réglage automatique du système.</div></li>
+          <li><span class="dot" style="background:var(--champ-2)"></span><div><strong>Recherche globale</strong><br>Chapitres, verbes opérateurs et ressources depuis l’accueil.</div></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Sur l’accueil</h3>
+        <p style="margin-bottom:14px">Les accès rapides et les espaces Réviser / S’entraîner :</p>
+        <ul class="list">
+          <li>Calculatrice, formules, notations, verbes, grilles</li>
+          <li>Synthèses et vidéos</li>
+          <li>Vrai / Faux, remédiations, OMB, interactivité</li>
+          <li>Favoris</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:0">
+    <div class="wrap faq">
+      <h2 class="section">Questions fréquentes</h2>
+      <details open>
+        <summary>Pour qui est MATH-TC&nbsp;?</summary>
+        <p>Pour les élèves qui suivent les mathématiques du tronc commun en 1<sup>re</sup>, 2<sup>e</sup> et 3<sup>e</sup> année (S1, S2, S3).</p>
+      </details>
+      <details>
+        <summary>Comment l’obtenir&nbsp;?</summary>
+        <p>L’application n’est pas disponible sur l’App Store public. Elle est installée sur les iPhone et iPad gérés, via Jamf School.</p>
+      </details>
+      <details>
+        <summary>Faut-il un compte&nbsp;?</summary>
+        <p>Non. L’application s’ouvre directement. Les favoris et les scores des questionnaires Vrai / Faux sont enregistrés sur l’appareil.</p>
+      </details>
+      <details>
+        <summary>Ça marche hors ligne&nbsp;?</summary>
+        <p>Oui pour les PDF enregistrés dans l’app (cours, synthèses, OMB, remédiations). Les vidéos et les activités interactives restent en ligne.</p>
+      </details>
+      <details>
+        <summary>Sur quels appareils&nbsp;?</summary>
+        <p>iPhone et iPad. Il n’existe pas de version Android.</p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p>
+        MATH-TC — Mathématiques, tronc commun.
+        <small>Application élève diffusée via Jamf School. Les contenus suivent le programme du tronc commun.</small>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
